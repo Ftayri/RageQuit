@@ -11,13 +11,20 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $photo
  * @property GamePublisher[] $gamePublishers
  * @property Genre $genre
+ * @property GameUser[] $gameUsers
+ * @property float $average_rating
+ * @property string $description
+ * @property string $steam_link
+ * @property string $website_link
+ * @property string $trailer_link
+ * @property string $background_image
  */
 class Game extends Model
 {
     /**
      * @var array
      */
-    protected $fillable = ['genre_id', 'game_name', 'photo'];
+    protected $fillable = ['genre_id', 'game_name', 'photo', 'average_rating', 'description', 'steam_link', 'website_link', 'trailer_link', 'background_image'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

@@ -20,32 +20,15 @@
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-                    <li class="dropdown first">
-                        <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown">
-                        Home <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    <li>
+                        <a href="{{ route('home') }}"class="btn btn-default">
+                        Home <i aria-hidden="true"></i>
                         </a>
-                        <ul class="dropdown-menu level1">
-                            <li><a href="index-2.html">Home 01</a></li>
-                            <li><a href="homev2.html">Home 02</a></li>
-                            <li><a href="homev3.html">Home 03</a></li>
-                        </ul>
                     </li>
-                    <li class="dropdown first">
-                        <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
-                        movies<i class="fa fa-angle-down" aria-hidden="true"></i>
+                    <li>
+                        <a href="{{ route('game.index',['page' => 1]) }}" class="btn btn-default">
+                        Games <i aria-hidden="true"></i>
                         </a>
-                        <ul class="dropdown-menu level1">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" >Movie grid<i class="ion-ios-arrow-forward"></i></a>
-                                <ul class="dropdown-menu level2">
-                                    <li><a href="moviegrid.html">Movie grid</a></li>
-                                    <li><a href="moviegridfw.html">movie grid full width</a></li>
-                                </ul>
-                            </li>			
-                            <li><a href="movielist.html">Movie list</a></li>
-                            <li><a href="moviesingle.html">Movie single</a></li>
-                            <li class="it-last"><a href="seriessingle.html">Series single</a></li>
-                        </ul>
                     </li>
                     <li class="dropdown first">
                         <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">

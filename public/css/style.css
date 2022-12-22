@@ -4602,7 +4602,7 @@ ul {
   color: #dcf836;
 }
 .topbar-filter .pagination2 {
-  padding-left: 100px;
+  padding-left: 40%;
 }
 @media (max-width: 767px) {
   .topbar-filter .pagination2 {
@@ -5658,7 +5658,6 @@ ul {
 }
 /*movie single hero*/
 .mv-single-hero {
-  background: url('../images/uploads/hero-bg.jpg') no-repeat;
   height: 598px;
 }
 /*series single hero*/
