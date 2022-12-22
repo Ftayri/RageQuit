@@ -35,11 +35,11 @@
 <!--end of signup form popup-->
 @include('partials.loginsignupform')
 @include('partials.navbar')
+@yield('content')
 @include('partials.footer')
 </body>
-
-</html>
 <script src="{{ asset('js/jquery.js') }}"></script>
 <script src="{{ asset('js/plugins.js') }}"></script>
 <script src="{{ asset('js/plugins2.js') }}"></script>
 <script src="{{ asset('js/custom.js') }}"></script>
+</html>
