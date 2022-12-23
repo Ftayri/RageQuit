@@ -28,9 +28,18 @@
 			</div>
 			<div class="col-md-8 col-sm-12 col-xs-12">
 				<div class="movie-single-ct main-content">
-					<h1 class="bd-hd">{{ $game->game_name }} <span>{{ $releaseYear }}</span></h1>
+					<h1 class="bd-hd">{{ $game->game_name }} <span>{{ $releaseYear}} @if(date('Y')-$releaseYear>0)({{ date('Y')-$releaseYear }} Years ago)@endif</span></h1>
+					@foreach($gamePublishers as $gamePublisher)
+						<h1 class="bd-hd"><span>{{ $gamePublisher->publisher->publisher_name }}</span></h1>
+					@endforeach
 					<div class="social-btn">
 						<a href="#" class="parent-btn"><i class="ion-heart"></i> Add to Favorite</a>
+						@if($game->steam_link)
+							<a href="{{ $game->steam_link }}" class="parent-btn"><i class="ion-steam"></i> Buy on Steam</a>
+						@endif
+						@if($game->website_link)
+							<a href="{{ $game->website_link }}" class="parent-btn"><i class="ion-android-globe"></i> Website</a>
+						@endif
 						<div class="hover-bnt">
 							<a href="#" class="parent-btn"><i class="ion-android-share-alt"></i>Share</a>
 							<div class="hvr-item">
@@ -39,7 +48,7 @@
 								<a href="#" class="hvr-grow"><i class="ion-social-googleplus"></i></a>
 								<a href="#" class="hvr-grow"><i class="ion-social-youtube"></i></a>
 							</div>
-						</div>		
+						</div>
 					</div>
 					<div class="movie-rate">
 						<div class="rate">

@@ -16,8 +16,15 @@ class GameController extends Controller
         foreach($gamePublishers as $gamePublisher){
             $gamePlatforms[]=$gamePublisher->gamePlatforms;
         }
-        //get the oldest release year of $gamePlatforms
-        $releaseYear=$gamePlatforms[0][0]->release_year;
+        $releaseYear=10000;
+        foreach($gamePlatforms as $platforms){
+            foreach($platforms as $platform){
+                if($platform->release_year<$releaseYear){
+                    $releaseYear=$platform->release_year;
+                }
+            }
+        }
+
         return view('game.details',compact('game','gamePublishers','gamePlatforms','releaseYear'));
     }
     public function index(Request $request){
