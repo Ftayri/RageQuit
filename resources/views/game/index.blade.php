@@ -34,17 +34,31 @@
 					<a  href="moviegrid.html" class="grid"><i class="ion-grid"></i></a>
 				</div>
                 @foreach($games as $game)
-                    <?php $gamePublishers=$game->gamePublishers;   
-                    foreach($gamePublishers as $gamePublisher){
-                        $gamePlatforms[]=$gamePublisher->gamePlatforms;
-                    }
-                    foreach($gamePlatforms as $gamePlatform){
-                        foreach($gamePlatform as $gameplat){
-                            $platformnames[]=$gameplat->platform->platform_name;
-                        }
-                    }
-                    $platformnames=array_unique($platformnames);
-                    $releaseYear=$gamePlatforms[0][0]->release_year;?>
+					@php
+						//initialize variables
+						$gamePlatforms=array();
+						$gamePublishers=array();
+						$platformnames=array();
+						$releaseYear=10000;
+						$gamePublishers=$game->gamePublishers;
+						foreach($gamePublishers as $gamePublisher){
+							$gamePlatforms[]=$gamePublisher->gamePlatforms;
+						}
+						foreach($gamePlatforms as $platforms){
+							foreach($platforms as $platform){
+								echo $game->game_name." ".$platform->release_year."<br>";
+								if($platform->release_year<=$releaseYear){
+									$releaseYear=$platform->release_year;
+								}
+							}
+						}
+						foreach($gamePlatforms as $platforms){
+							foreach($platforms as $platform){
+								$platformnames[]=$platform->platform->platform_name;
+							}
+						}
+						$platformnames=array_unique($platformnames);
+					@endphp
                     <div class="movie-item-style-2">
                         <img src="{{ asset('images/games/'.$game->photo) }}" alt="">
                         <div class="mv-item-infor">

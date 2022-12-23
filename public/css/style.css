@@ -8283,3 +8283,7 @@ footer.full-width-ft .ft-copyright {
   font-family: 'Dosis', sans-serif;
   font-weight: 700;
 }
+.underlined:hover {
+  text-decoration: underline;
+  color: #4f5b68;
+}

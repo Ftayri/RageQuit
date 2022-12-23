@@ -30,8 +30,9 @@
 				<div class="movie-single-ct main-content">
 					<h1 class="bd-hd">{{ $game->game_name }} <span>{{ $releaseYear}} @if(date('Y')-$releaseYear>0)({{ date('Y')-$releaseYear }} Years ago)@endif</span></h1>
 					@foreach($gamePublishers as $gamePublisher)
-						<h1 class="bd-hd"><span>{{ $gamePublisher->publisher->publisher_name }}</span></h1>
+						<h1 class="bd-hd"><a class="underlined" href="{{ route('publisher.details',['id'=>$gamePublisher->publisher_id, 'page' => 1]) }}"><span>{{ $gamePublisher->publisher->publisher_name }}</span></a></h1>
 					@endforeach
+					<br>
 					<div class="social-btn">
 						<a href="#" class="parent-btn"><i class="ion-heart"></i> Add to Favorite</a>
 						@if($game->steam_link)

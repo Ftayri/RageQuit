@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\PublisherController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,3 +19,4 @@ use App\Http\Controllers\GameController;
 Route::get('/',[HomeController::class,'index'])->name('home');
 Route::get('/games/{id}',[GameController::class,'details'])->name('game.details');
 Route::get('/games',[GameController::class,'index'])->name('game.index');
+Route::get('/publisher/{id}',[PublisherController::class,'details'])->name('publisher.details');

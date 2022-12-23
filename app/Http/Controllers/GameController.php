@@ -24,7 +24,6 @@ class GameController extends Controller
                 }
             }
         }
-
         return view('game.details',compact('game','gamePublishers','gamePlatforms','releaseYear'));
     }
     public function index(Request $request){
