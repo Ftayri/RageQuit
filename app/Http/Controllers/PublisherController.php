@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
 use App\Models\Publisher;
 
 use Illuminate\Support\Collection;
@@ -24,12 +23,10 @@ class PublisherController extends Controller
             }
         }
         $platformNames=array_unique($platformNames);
-        foreach($platformNames as $platformName){
-            echo $platformName;
-        }
+        $totalGames=count($games);
         $page=$request->query('page',1);
         $games= $this->paginate($games, 5, $page);
-        return view('publisher.details',compact('publisher','games','platformNames'));
+        return view('publisher.details',compact('publisher','games','platformNames','totalGames','page'));
     }
 
     public function paginate($items, $perPage = 5, $page = null, $options = [])

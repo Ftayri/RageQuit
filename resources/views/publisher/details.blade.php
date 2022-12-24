@@ -64,11 +64,20 @@
 					<div class="movie-tabs">
 						<div class="tabs">
 							<ul class="tab-links tabs-mv">
-								<li class="active"><a href="#overview">Overview</a></li>
-								<li><a href="#moviesrelated"> Related Games</a></li>                        
+								@if($page>1)
+									<li><a href="#overview">Overview</a></li>
+									<li class="active"><a href="#moviesrelated"> Related Games</a></li>
+								@else
+									<li class="active"><a href="#overview">Overview</a></li>
+									<li ><a href="#moviesrelated"> Related Games</a></li> 
+								@endif              
 							</ul>
 						    <div class="tab-content">
-						        <div id="overview" class="tab active">
+								@if($page>1)
+						        <div id="overview" class="tab">
+								@else
+								<div id="overview" class="tab active">
+								@endif
 						            <div class="row">
 						            	<div class="col-md-8 col-sm-12 col-xs-12">
 						            		<p>{{ $publisher->description }}</p>
@@ -78,7 +87,7 @@
 						            			<h6>Platforms: </h6>
                                                 <p>
                                                     @foreach($platformNames as $platformName)
-                                                    <a href="#">{{ $platformName }}, </a>
+                                                    <a href="#">{{ $platformName }} </a>,
                                                     @endforeach
                                                 </p>
 						            		</div>
@@ -87,12 +96,16 @@
 						            	</div>
 						            </div>
 						        </div>
-					       	 	<div id="moviesrelated" class="tab">
+								@if($page>1)
+					       	 	<div id="moviesrelated" class="tab active">
+								@else
+								<div id="moviesrelated" class="tab">
+								@endif
 					       	 		<div class="row">
-					       	 			<h3>Related Movies To</h3>
-					       	 			<h2>Skyfall: Quantum of Spectre</h2>
+					       	 			<h3>Games published by</h3>
+					       	 			<h2>{{ $publisher->publisher_name }}</h2>
 					       	 			<div class="topbar-filter">
-											<p>Found <span>12 movies</span> in total</p>
+											<p>Found <span>{{ $totalGames }}</span> in total</p>
 											<label>Sort by:</label>
 											<select>
 												<option value="popularity">Popularity Descending</option>
@@ -103,39 +116,17 @@
 												<option value="date">Release date Ascending</option>
 											</select>
 										</div>
-										<div class="movie-item-style-2">
-											<img src="images/uploads/mv1.jpg" alt="">
-											<div class="mv-item-infor">
-												<h6><a href="#">oblivion <span>(2012)</span></a></h6>
-												<p class="rate"><i class="ion-android-star"></i><span>8.1</span> /10</p>
-												<p class="describe">Earth's mightiest heroes must come together and learn to fight as a team if they are to stop the mischievous Loki and his alien army from enslaving humanity...</p>
-												<p class="run-time"> Run Time: 2h21’    .     <span>MMPA: PG-13 </span>    .     <span>Release: 1 May 2015</span></p>
-												<p>Director: <a href="#">Joss Whedon</a></p>
-												<p>Stars: <a href="#">Robert Downey Jr.,</a> <a href="#">Chris Evans,</a> <a href="#">  Chris Hemsworth</a></p>
-											</div>
-										</div>
-										<div class="movie-item-style-2">
-											<img src="images/uploads/mv2.jpg" alt="">
-											<div class="mv-item-infor">
-												<h6><a href="#">into the wild <span>(2014)</span></a></h6>
-												<p class="rate"><i class="ion-android-star"></i><span>7.8</span> /10</p>
-												<p class="describe">As Steve Rogers struggles to embrace his role in the modern world, he teams up with a fellow Avenger and S.H.I.E.L.D agent, Black Widow, to battle a new threat...</p>
-												<p class="run-time"> Run Time: 2h21’    .     <span>MMPA: PG-13 </span>    .     <span>Release: 1 May 2015</span></p>
-												<p>Director: <a href="#">Anthony Russo,</a><a href="#">Joe Russo</a></p>
-												<p>Stars: <a href="#">Chris Evans,</a> <a href="#">Samuel L. Jackson,</a> <a href="#">  Scarlett Johansson</a></p>
-											</div>
-										</div>
+										@foreach($games as $game)
+											@include('partials.games_index')
+										@endforeach
 										<div class="topbar-filter">
-											<label>Movies per page:</label>
-											<select>
-												<option value="range">5 Movies</option>
-												<option value="saab">10 Movies</option>
-											</select>
 											<div class="pagination2">
-												<span>Page 1 of 2:</span>
-												<a class="active" href="#">1</a>
-												<a href="#">2</a>
-												<a href="#"><i class="ion-arrow-right-b"></i></a>
+												<span>Page number {{ $page }}:</span>
+												@if($page>1)
+													<a href="{{ route('publisher.details',['id'=>$publisher->id, 'page' => $page-1]) }}"><i class="ion-arrow-left-b" style="padding-right:14px;"></i></a>
+												@endif
+												<a class="active" href="#">{{ $page }}</a>
+												<a href="{{ route('publisher.details',['id'=>$publisher->id, 'page' => $page+1]) }}"><i class="ion-arrow-right-b"></i></a>
 											</div>
 										</div>
 					       	 		</div>

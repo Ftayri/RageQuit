@@ -20,7 +20,7 @@
                             <div class="cate">
                                 <span class="blue"><a href="#">{{ $game->genre->genre_name }}</a></span>
                             </div>
-                            <h6><a href="{{route('game.details',$game->id)}}">{{ $game->game_name }}</a></h6>
+                            <h6><a href="{{route('game.details',['id'=>$game->id,'page'=>1])}}">{{ $game->game_name }}</a></h6>
                             <p><i class="ion-android-star"></i><span>7.4</span> /10</p>
                         </div>
                     </div>

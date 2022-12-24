@@ -8,7 +8,11 @@
 					<h1> game listing - list</h1>
 					<ul class="breadcumb">
 						<li class="active"><a href="{{ route('home') }}">Home</a></li>
-						<li> <span class="ion-ios-arrow-right"></span> game listing</li>
+						@if(empty($genre))
+							<li> <span class="ion-ios-arrow-right"></span>game listing</li>*
+						@else
+							<li> <span class="ion-ios-arrow-right"></span>{{ $genre->genre_name }} games</li>
+						@endif
 					</ul>
 				</div>
 			</div>
@@ -34,55 +38,24 @@
 					<a  href="moviegrid.html" class="grid"><i class="ion-grid"></i></a>
 				</div>
                 @foreach($games as $game)
-					@php
-						//initialize variables
-						$gamePlatforms=array();
-						$gamePublishers=array();
-						$platformnames=array();
-						$releaseYear=10000;
-						$gamePublishers=$game->gamePublishers;
-						foreach($gamePublishers as $gamePublisher){
-							$gamePlatforms[]=$gamePublisher->gamePlatforms;
-						}
-						foreach($gamePlatforms as $platforms){
-							foreach($platforms as $platform){
-								echo $game->game_name." ".$platform->release_year."<br>";
-								if($platform->release_year<=$releaseYear){
-									$releaseYear=$platform->release_year;
-								}
-							}
-						}
-						foreach($gamePlatforms as $platforms){
-							foreach($platforms as $platform){
-								$platformnames[]=$platform->platform->platform_name;
-							}
-						}
-						$platformnames=array_unique($platformnames);
-					@endphp
-                    <div class="movie-item-style-2">
-                        <img src="{{ asset('images/games/'.$game->photo) }}" alt="">
-                        <div class="mv-item-infor">
-                            <h6><a href="{{ route('game.details',$game->id) }}">{{ $game->game_name }} <span>({{ $releaseYear }})</span></a></h6>
-                            <p class="rate"><i class="ion-android-star"></i><span>{{ $game->average_rating }}</span> /10</p>
-                            <p class="describe">{{ Str::limit($game->description,300 ) }}</p>
-                            <p>Platforms:
-                                @foreach($platformnames as $platformname)
-                                    <span>{{ $platformname }}, </span>
-								@endforeach
-                            </p>
-                            <p>Genre: <span>{{ $game->genre->genre_name }}</span></p>
-                            <p><span>Release: {{ $releaseYear }}</span></p>
-                        </div>
-                    </div>
+                    @include('partials.games_index')
                 @endforeach
 				<div class="topbar-filter">
 					<div class="pagination2">
 						<span>Page number {{ $page }}:</span>
-                        @if($page>1)
-                            <a href="{{ route('game.index',['page'=>$page-1]) }}"><i class="ion-arrow-left-b"></i></a>
-                        @endif
+						@if($page>1)
+							@if(!empty($genre))
+								<a href="{{ route('genre.games',['id'=>$genre->id,'page'=>$page-1]) }}"><i class="ion-arrow-left-b"></i></a>
+							@else
+								<a href="{{ route('game.index',['page'=>$page-1]) }}"><i class="ion-arrow-left-b"></i></a>
+							@endif
+						@endif
 						<a class="active" href="#">{{ $page }}</a>
-						<a href="{{ route('game.index',['page'=>$page+1]) }}"><i class="ion-arrow-right-b"></i></a>
+						@if(!empty($genre))
+							<a href="{{ route('genre.games',['id'=>$genre->id,'page'=>$page+1]) }}"><i class="ion-arrow-right-b"></i></a>
+						@else
+							<a href="{{ route('game.index',['page'=>$page+1]) }}"><i class="ion-arrow-right-b"></i></a>
+						@endif
 					</div>
 				</div>
 			</div>
