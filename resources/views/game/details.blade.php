@@ -25,7 +25,7 @@
 							<div><a href="{{ $game->trailer_link }}" class="item item-2 redbtn fancybox-media hvr-grow"><i class="ion-play"></i></a></div>
 						</div>
 						<div class="btn-transform transform-vertical">
-							<div><a href="#" class="item item-1 yellowbtn"> <i class="ion-android-add"></i> Add to Favourites</a></div>
+							<div><a href="" class="item item-1 yellowbtn"> <i class="ion-android-add"></i> Add to Favourites</a></div>
 						</div>
 					</div>
 				</div>
@@ -38,7 +38,12 @@
 					@endforeach
 					<br>
 					<div class="social-btn">
-						<a href="#" class="parent-btn"><i class="ion-heart"></i> Add to Favorite</a>
+						<i class="ion-heart"></i>
+						<form id="fav">
+							<input type="hidden" id="game_id" value="{{ $game->id }}">
+							<button type="submit" class="parent-btn" id="favorite"> Add to Favorites</button>
+							<button type="submit" class="parent-btn" id="unfavorite" hidden> Remove from Favorites</button>
+						</form>
 						@if($game->steam_link)
 							<a href="{{ $game->steam_link }}" class="parent-btn"><i class="ion-steam"></i> Buy on Steam</a>
 						@endif
@@ -135,7 +140,7 @@
 												@foreach($gamePlatforms as $gamePlatform)
 													<p>
 														@foreach($gamePlatform as $gameplat)
-															<a href="#">{{ $gameplat->platform->platform_name }}</a>,
+															<a href="{{ route('platform.games',['id'=>$gameplat->platform->id,'page'=>1]) }}">{{ $gameplat->platform->platform_name }}</a>,
 														@endforeach
 													</p>
 												@endforeach
@@ -395,4 +400,50 @@
 		</div>
 	</div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script type="text/javascript">
+	$('#fav').on('submit',function(e){
+    e.preventDefault();
+
+    let id = $('#game_id').val();
+    
+    $.ajax({
+      url: "/submit-game-user",
+      type:"POST",
+      data:{
+        "_token": "{{ csrf_token() }}",
+        id:id,
+      },
+      success:function(response){
+        //get success message
+		if(response['success']=='User not logged in'){
+			alert('You must be logged in to add games to your favorites');
+			//click on login button
+			$('.loginLink').click();
+		}
+		else if(response['success']=='Game added to favorites'){
+			alert('Game added to favorites');
+		}
+		else if(response['success']=='Game removed from favorites'){
+			alert('Game removed from favorites');
+		}
+		else{
+			alert('Error');
+		}
+
+		// if($('#favorite').is(':hidden')){
+		// 	$('#favorite').show();
+		// 	$('#unfavorite').hide();
+		// }
+		// else{
+		// 	$('#favorite').hide();
+		// 	$('#unfavorite').show();
+		// }
+      },
+      error: function(response) {
+        console.log(response);
+      },
+      });
+    });
+</script>
 @endsection

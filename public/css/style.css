@@ -5672,7 +5672,7 @@ ul {
 }
 .common-hero {
   height: 385px;
-  background: url('../images/uploads/user-hero-bg.jpg') no-repeat;
+  background: url('../images/backgrounds/gaming.jpg') no-repeat;
 }
 .common-hero:before {
   background-color: rgba(0, 0, 0, 0.4);
@@ -5875,10 +5875,49 @@ ul {
   text-transform: uppercase;
   margin-right: 35px;
 }
+.social-btn a.parent-btn {
+  font-family: 'Dosis', sans-serif;
+  font-size: 14px;
+  color: #dd003f;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-right: 35px;
+}
 @media (max-width: 767px) {
   .social-btn a.parent-btn {
     margin-bottom: 40px;
   }
+}
+.social-btn button.parent-btn{
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    /*optional*/
+    font-family: 'Dosis', sans-serif;
+    font-weight: bold;
+    /*input has OS specific font-family*/
+    color: #dd003f;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-right:25px;
+}
+.social-btn i {
+  font-family: 'Dosis', sans-serif;
+  font-size: 14px;
+  color: #dd003f;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-right: 35px;
+}
+.social-btn i {
+  padding: 10px 14px;
+  text-align: center;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  border: 1px solid #dd003f;
+  margin-right: 10px;
+  font-size: 16px;
 }
 .social-btn a.parent-btn i {
   padding: 10px 14px;

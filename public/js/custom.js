@@ -454,6 +454,8 @@ $(function(){
 	//pop up for login form
     loginLink.on('click', function(event){
     	event.preventDefault();
+		var overlay = $(".overlay");
+		overlay.removeClass("openform");
     	loginct.parents(overlay).addClass("openform");
 		$(document).on('click', function(e){
 		var target = $(e.target);
@@ -470,6 +472,8 @@ $(function(){
     //pop up for signup form
     signupLink.on('click', function(event){
     	event.preventDefault();
+		var overlay = $(".overlay");
+		overlay.removeClass("openform");
     	signupct.parents(overlay).addClass("openform");
 		$(document).on('click', function(e){
 		var target = $(e.target);

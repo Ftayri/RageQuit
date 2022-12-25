@@ -5,6 +5,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\GenreController;
+use App\Http\Controllers\PlatformController;
+use App\Http\Controllers\GameUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +24,6 @@ Route::get('/games/{id}',[GameController::class,'details'])->name('game.details'
 Route::get('/games',[GameController::class,'index'])->name('game.index');
 Route::get('/publisher/{id}',[PublisherController::class,'details'])->name('publisher.details');
 Route::get('/genre/{id}',[GenreController::class,'games'])->name('genre.games');
+Route::get('/platform/{id}',[PlatformController::class,'games'])->name('platform.games');
+Route::post('submit-game-user',[GameUserController::class,'create']);
+Route::get('get-game-user',[GameUserController::class,'store']);

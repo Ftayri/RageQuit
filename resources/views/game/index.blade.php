@@ -8,10 +8,12 @@
 					<h1> game listing - list</h1>
 					<ul class="breadcumb">
 						<li class="active"><a href="{{ route('home') }}">Home</a></li>
-						@if(empty($genre))
-							<li> <span class="ion-ios-arrow-right"></span>game listing</li>*
-						@else
+						@if(!empty($genre))
 							<li> <span class="ion-ios-arrow-right"></span>{{ $genre->genre_name }} games</li>
+						@elseif(!empty($platform))
+							<li> <span class="ion-ios-arrow-right"></span>{{ $platform->platform_name }} games</li>
+						@else
+							<li> <span class="ion-ios-arrow-right"></span>game listing</li>
 						@endif
 					</ul>
 				</div>
@@ -46,6 +48,8 @@
 						@if($page>1)
 							@if(!empty($genre))
 								<a href="{{ route('genre.games',['id'=>$genre->id,'page'=>$page-1]) }}"><i class="ion-arrow-left-b"></i></a>
+							@elseif(!empty($platform))
+								<a href="{{ route('platform.games',['id'=>$platform->id,'page'=>$page-1]) }}"><i class="ion-arrow-left-b"></i></a>
 							@else
 								<a href="{{ route('game.index',['page'=>$page-1]) }}"><i class="ion-arrow-left-b"></i></a>
 							@endif
@@ -53,6 +57,8 @@
 						<a class="active" href="#">{{ $page }}</a>
 						@if(!empty($genre))
 							<a href="{{ route('genre.games',['id'=>$genre->id,'page'=>$page+1]) }}"><i class="ion-arrow-right-b"></i></a>
+						@elseif(!empty($platform))
+							<a href="{{ route('platform.games',['id'=>$platform->id,'page'=>$page+1]) }}"><i class="ion-arrow-right-b"></i></a>
 						@else
 							<a href="{{ route('game.index',['page'=>$page+1]) }}"><i class="ion-arrow-right-b"></i></a>
 						@endif
@@ -121,22 +127,6 @@
 								</div>
 							</div>
 						</form>
-					</div>
-					<div class="ads">
-						<img src="images/uploads/ads1.png" alt="">
-					</div>
-					<div class="sb-facebook sb-it">
-						<h4 class="sb-title">Find us on Facebook</h4>
-						<iframe src="#" data-src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Ftemplatespoint.net%2F%3Ffref%3Dts&tabs=timeline&width=340&height=315px&small_header=true&adapt_container_width=false&hide_cover=false&show_facepile=true&appId"  height="315" style="width:100%;border:none;overflow:hidden" ></iframe>
-					</div>
-					<div class="sb-twitter sb-it">
-						<h4 class="sb-title">Tweet to us</h4>
-						<div class="slick-tw">
-							<div class="tweet item" id=""><!-- Put your twiter id here -->
-							</div>
-							<div class="tweet item" id=""><!-- Put your 2nd twiter account id here -->
-							</div>
-						</div>							
 					</div>
 				</div>
 			</div>

@@ -30,11 +30,7 @@
            </div>
         </form>
         <div class="row">
-        	<p>Or via social</p>
-            <div class="social-btn-2">
-            	<a class="fb" href="#"><i class="ion-social-facebook"></i>Facebook</a>
-            	<a class="tw" href="#"><i class="ion-social-twitter"></i>twitter</a>
-            </div>
+        	<p>Don't have an account? Sign up <a class="signupLink" href="#" style="text-decoration: underline" >here</a></p>
         </div>
     </div>
 </div>
@@ -73,6 +69,9 @@
            <div class="row">
              <button type="submit">sign up</button>
            </div>
+           <div class="row">
+        	<p>Already have an account? Log in <a class="loginLink" href="#" style="text-decoration: underline" >here</a></p>
+            </div>
         </form>
     </div>
 </div>
