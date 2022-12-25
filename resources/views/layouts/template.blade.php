@@ -27,6 +27,7 @@
 	<!-- CSS files -->
 	<link rel="stylesheet" href="{{ asset('css/plugins.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+	<script src="https://kit.fontawesome.com/5db731c372.js" crossorigin="anonymous"></script>
 
 </head>
 <body>

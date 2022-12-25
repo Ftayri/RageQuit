@@ -7,6 +7,7 @@ use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\PlatformController;
 use App\Http\Controllers\GameUserController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,6 @@ Route::get('/genre/{id}',[GenreController::class,'games'])->name('genre.games');
 Route::get('/platform/{id}',[PlatformController::class,'games'])->name('platform.games');
 Route::post('submit-game-user',[GameUserController::class,'create']);
 Route::get('get-game-user',[GameUserController::class,'store']);
+Route::post('register',[UserController::class,'register'])->name('user.register');
+Route::get('logout',[UserController::class,'logout'])->name('user.logout');
+Route::post('login',[UserController::class,'login'])->name('user.login');

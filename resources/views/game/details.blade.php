@@ -37,12 +37,34 @@
 						<h1 class="bd-hd"><a class="underlined" href="{{ route('publisher.details',['id'=>$gamePublisher->publisher_id, 'page' => 1]) }}"><span>{{ $gamePublisher->publisher->publisher_name }}</span></a></h1>
 					@endforeach
 					<br>
+					@php $hasGame=false; @endphp
+					@if(Auth::check())
+						@if(auth()->user()->gameUsers)
+							@foreach(auth()->user()->gameUsers as $gameUser)
+								@if($gameUser->game_id == $game->id)
+									@php $hasGame=true; @endphp
+									@break
+								@endif
+							@endforeach
+						@endif
+					@endif
 					<div class="social-btn">
-						<i class="ion-heart"></i>
+						@if($hasGame)
+							<i id="favicon" class="ion-heart" hidden></i>
+							<i id="unfavicon" class="ion-android-close"></i>
+						@else
+							<i id="favicon" class="ion-heart"></i>
+							<i id="unfavicon" class="ion-android-close" hidden></i>
+						@endif
 						<form id="fav">
-							<input type="hidden" id="game_id" value="{{ $game->id }}">
-							<button type="submit" class="parent-btn" id="favorite"> Add to Favorites</button>
-							<button type="submit" class="parent-btn" id="unfavorite" hidden> Remove from Favorites</button>
+							<input type="hidden" id="game_id" name="game_id" value="{{ $game->id }}">
+							@if($hasGame)
+								<button type="submit" class="parent-btn" id="favorite" hidden> Add to Favorites</button>
+								<button type="submit" class="parent-btn" id="unfavorite"> Remove from Favorites</button>
+							@else
+								<button type="submit" class="parent-btn" id="favorite"> Add to Favorites</button>
+								<button type="submit" class="parent-btn" id="unfavorite" hidden> Remove from Favorites</button>
+							@endif
 						</form>
 						@if($game->steam_link)
 							<a href="{{ $game->steam_link }}" class="parent-btn"><i class="ion-steam"></i> Buy on Steam</a>
@@ -411,34 +433,29 @@
       url: "/submit-game-user",
       type:"POST",
       data:{
-        "_token": "{{ csrf_token() }}",
-        id:id,
+		"_token": "{{ csrf_token() }}",
+        game_id:id,
       },
       success:function(response){
-        //get success message
 		if(response['success']=='User not logged in'){
 			alert('You must be logged in to add games to your favorites');
-			//click on login button
 			$('.loginLink').click();
 		}
-		else if(response['success']=='Game added to favorites'){
-			alert('Game added to favorites');
+		else if(response['success']=='Successfully added game to your list'){
+			$('#favorite').hide();
+			$('#favicon').hide();
+			$('#unfavorite').show();
+			$('#unfavicon').show();
 		}
-		else if(response['success']=='Game removed from favorites'){
-			alert('Game removed from favorites');
+		else if(response['success']=='Successfully removed game from your list'){
+			$('#favorite').show();
+			$('#favicon').show();
+			$('#unfavorite').hide();
+			$('#unfavicon').hide();
 		}
 		else{
 			alert('Error');
 		}
-
-		// if($('#favorite').is(':hidden')){
-		// 	$('#favorite').show();
-		// 	$('#unfavorite').hide();
-		// }
-		// else{
-		// 	$('#favorite').hide();
-		// 	$('#unfavorite').show();
-		// }
       },
       error: function(response) {
         console.log(response);
