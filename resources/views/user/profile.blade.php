@@ -27,6 +27,7 @@
 						<p>Account Details</p>
 						<ul>
 							<li class="active"><a href="{{ route('user.profile') }}">Favorite games</a></li>
+							<li><a href="{{ route('user.profile-edit') }}">Edit profile</a></li>
 						</ul>
 					</div>
 					<div class="user-fav">
@@ -40,11 +41,6 @@
 			<div class="col-md-9 col-sm-12 col-xs-12">
 				<div class="topbar-filter user">
                     <p>Found <span>{{ $totalGames }}</span> in total</p>
-					<label>Sort by:</label>
-					<select>
-						<option value="range">-- Choose option --</option>
-						<option value="saab">-- Choose option 2--</option>
-					</select>
 				</div>
 				<div class="flex-wrap-movielist grid-fav">
                     @foreach($userGames as $userGame)
