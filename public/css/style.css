@@ -4232,7 +4232,8 @@ ul {
 .movie_list .movie-item-style-2 img,
 .movie_single .movie-item-style-2 img,
 .userfav_list .movie-item-style-2 img {
-  width: 30%;
+  width: 225px !important;
+  height: 300px !important;
 }
 @media (max-width: 767px) {
   .movie_list .movie-item-style-2 img,
@@ -5874,14 +5875,9 @@ ul {
   font-weight: bold;
   text-transform: uppercase;
   margin-right: 35px;
-}
-.social-btn a.parent-btn {
-  font-family: 'Dosis', sans-serif;
-  font-size: 14px;
-  color: #dd003f;
-  font-weight: bold;
-  text-transform: uppercase;
-  margin-right: 35px;
+  display:flex;
+  align-items:center;
+  justify-content: flex-start;
 }
 @media (max-width: 767px) {
   .social-btn a.parent-btn {
@@ -7130,7 +7126,7 @@ p.ceb-single {
   display: -ms-flexbox;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 .slider .social-link p {
   font-family: 'Dosis', sans-serif;
@@ -7907,6 +7903,7 @@ header .navbar-default .navbar-nav li.btn a {
   -moz-border-radius: 20px;
   border-radius: 20px;
 }
+
 header .navbar-default .navbar-nav .dropdown .dropdown-menu.level1 {
   position: absolute;
   min-width: 180px;

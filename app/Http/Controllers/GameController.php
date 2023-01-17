@@ -26,17 +26,41 @@ class GameController extends Controller
                 }
             }
         }
+        $firstReview=$game->gameUsers->where('review','!=',null)->first();
+        $totalReviews=$game->gameUsers->where('review','!=',null)->count();
         $similarGames=$game->genre->games;
         $totalGames=count($similarGames);
         $page=$request->query('page',1);
         $similarGames= $this->paginator($similarGames, 5, $page);
-        return view('game.details',compact('game','gamePublishers','gamePlatforms','releaseYear','similarGames','page'));
+        return view('game.details',compact('game','gamePublishers','gamePlatforms','releaseYear','similarGames','page','totalReviews','firstReview'));
     }
     public function index(Request $request){
-        $page=$request->query('page');
+        $page=$request->query('page',1);
+        $sort=$request->query('sort','top');
         $totalGames=Game::count();
-        $games=Game::paginate(5,['*'],'page',$page);
+        if($sort=='top'){
+            $games=Game::orderBy('average_rating','desc')->paginate(5,['*'],'page',$page);
+        }
+        else if($sort=='bot'){
+            $games=Game::orderBy('average_rating','asc')->paginate(5,['*'],'page',$page);
+        }
         return view('game.index',compact('games','page','totalGames'));
+
+    }
+    public function reviews(Request $request,$id){
+        $game=Game::where('id',$id)->first();
+        $gameUsers=$game->gameUsers->where('review','!=',null);
+        $totalReviews=$gameUsers->count();
+        $page=$request->query('page',1);
+        $gameUsers= $this->paginator($gameUsers, 5, $page);
+        return view('game.reviews',compact('gameUsers','page','totalReviews','game'));
+    }
+    public function search(Request $request){
+        $search=$request->input('search');
+        $page=$request->query('page',1);
+        $games=Game::where('game_name','like','%'.$search.'%')->paginate(5,['*'],'page',$page);
+        $totalGames=$games->total();
+        return view('game.index',compact('games','page','totalGames','search'));
     }
     public function paginator($items, $perPage = 5, $page = null, $options = [])
     {

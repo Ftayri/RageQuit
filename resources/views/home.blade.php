@@ -4,11 +4,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="social-link">
-				<p>Follow us: </p>
-				<a href="#"><i class="ion-social-facebook"></i></a>
-				<a href="#"><i class="ion-social-twitter"></i></a>
-				<a href="#"><i class="ion-social-googleplus"></i></a>
-				<a href="#"><i class="ion-social-youtube"></i></a>
+				<p>Popular right now:</p>
 			</div>
             <div class="slick-multiItemSlider">
                 @foreach($games as $game)
@@ -20,8 +16,8 @@
                             <div class="cate">
                                 <span class="blue"><a href="#">{{ $game->genre->genre_name }}</a></span>
                             </div>
-                            <h6><a href="{{route('game.details',['id'=>$game->id,'page'=>1])}}">{{ $game->game_name }}</a></h6>
-                            <p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+                            <h6><a href="{{route('game.details',['id'=>$game->id])}}">{{ $game->game_name }}</a></h6>
+                            <p><i class="ion-android-star"></i><span>{{ $game->average_rating }}</span> /10</p>
                         </div>
                     </div>
                 @endforeach

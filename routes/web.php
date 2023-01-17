@@ -31,3 +31,7 @@ Route::get('get-game-user',[GameUserController::class,'store']);
 Route::post('register',[UserController::class,'register'])->name('user.register');
 Route::get('logout',[UserController::class,'logout'])->name('user.logout');
 Route::post('login',[UserController::class,'login'])->name('user.login');
+Route::get('profile',[GameUserController::class,'profile'])->name('user.profile');
+Route::post('review-game',[GameUserController::class,'update']);
+Route::get('/game/{id}/reviews',[GameController::class,'reviews'])->name('game.reviews');
+Route::get('/search',[GameController::class,'search'])->name('game.search');

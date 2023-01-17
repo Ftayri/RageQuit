@@ -445,11 +445,30 @@ $(function(){
 	var loginLink = $(".loginLink");
 	var signupLink = $(".signupLink");
 	var loginct = $( "#login-content" );
+	var reviewct = $("#review-content");
 	var signupct= $("#signup-content");
 	var loginWrap = $(".login-wrapper");
 	var overlay = $(".overlay");
+	var btnReview = $("#btnReview");
 	loginWrap.each( function(){
 		$(this).wrap('<div class="overlay"></div>')
+	});
+	btnReview.on('click', function(event){
+		event.preventDefault();
+		var overlay = $(".overlay");
+		overlay.removeClass("openform");
+		reviewct.parents(overlay).addClass("openform");
+		$(document).on('click', function(e){
+		var target = $(e.target);
+		if ($(target).hasClass("overlay")){
+				$(target).find(loginct).each( function(){
+					$(this).removeClass("openform");
+				});
+				setTimeout( function(){
+					$(target).removeClass("openform");
+				}, 350);
+			}
+		});
 	});
 	//pop up for login form
     loginLink.on('click', function(event){
