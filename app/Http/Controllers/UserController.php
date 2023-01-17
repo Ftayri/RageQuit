@@ -24,7 +24,7 @@ class UserController extends Controller
             'password' => 'required|min:8'
         ]);
         if($valdiator->fails()){
-            return redirect()->back()->withErrors($valdiator,'loginErrors');
+            return redirect()->back()->withErrors($valdiator);
         }
         if (Auth::attempt(['name' => $data['username'], 'password' => $data['password']], $data['remember'])) {
             return redirect()->back();
@@ -46,7 +46,7 @@ class UserController extends Controller
             'password_signup' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
         if($validator->fails()){
-            return redirect()->back()->withErrors($validator,'registerErrors');
+            return redirect()->back()->withErrors($validator);
         }
             $user=User::create([
             'name' => $data['username_signup'],
@@ -74,7 +74,7 @@ class UserController extends Controller
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
             ]);
             if($validator->fails()){
-                return redirect()->back()->withErrors($validator,'profileErrors');
+                return redirect()->back()->withErrors($validator,'passwordErrors');
             }
             $password=$request->input('password');
             $user=User::where('email',auth()->user()->email)->first();
@@ -82,22 +82,34 @@ class UserController extends Controller
             $user->save();
             return redirect()->back()->with('success','Password updated successfully');
         }
-        else{
+        else if ($request->input('name')){
             $validator=Validator::make($request->all(), [
                 'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             ]);
+            $user=User::where('email',auth()->user()->email)->first();
             if($validator->fails()){
                 return redirect()->back()->withErrors($validator,'profileErrors');
             }
             $username=$request->input('name');
-            $email=$request->input('email');
-            //get user from database where email is equal to current user email
-            $user=User::where('email',auth()->user()->email)->first();
             $user->name=$username;
-            $user->email=$email;
             $user->save();
             return redirect()->back()->with('success','Profile updated successfully');
+        }
+        else if ($request->input('email')){
+            $validator=Validator::make($request->all(), [
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            ]);
+            if($validator->fails()){
+                return redirect()->back()->withErrors($validator,'emailErrors');
+            }
+            $user=User::where('email',auth()->user()->email)->first();
+            $email=$request->input('email');
+            $user->email=$email;
+            $user->save();
+            return redirect()->back()->with('success','Email updated successfully');
+        }
+        else{
+            return redirect()->back();
         }
 
     }

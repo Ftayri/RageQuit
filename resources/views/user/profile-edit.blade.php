@@ -40,6 +40,13 @@
 				</div>
 			</div>
 			<div class="col-md-9 col-sm-12 col-xs-12">
+                <div class="row">
+                    @if(session()->has('success'))
+                    <div class="alert alert-success">
+                        {{ session()->get('success') }}
+                    </div>
+                    @endif
+                </div>
 				<div class="form-style-1 user-pro" action="#">
 					<form method="post" action="{{ route('user.profile-edit') }}" class="user">
                         @csrf
@@ -49,11 +56,40 @@
 								<label>Username</label>
 								<input name="name" type="text" value="{{ $username }}" required>
 							</div>
+						</div>
+                        @if(!$errors->profileErrors->isEmpty())
+                            <div class="row">
+                            @foreach($errors->profileErrors->all() as $error)
+                                <div class="col-md-6 alert alert-danger" role="alert">
+                                    {{ $error }}
+                                </div>
+                            @endforeach
+                            </div>
+                        @endif
+						<div class="row">
+							<div class="col-md-2">
+								<input class="submit" type="submit" value="save">
+							</div>
+						</div>	
+					</form>
+                    <form method="post" action="{{ route('user.profile-edit') }}" class="user">
+                        @csrf
+						<h4>02. Change Email</h4>
+						<div class="row">
 							<div class="col-md-6 form-it">
 								<label>Email Address</label>
 								<input name="email" type="email" value="{{ $email }}" required>
 							</div>
 						</div>
+                        @if(!$errors->emailErrors->isEmpty())
+                            <div class="row">
+                            @foreach($errors->emailErrors->all() as $error)
+                                <div class="col-md-6 alert alert-danger" role="alert">
+                                    {{ $error }}
+                                </div>
+                            @endforeach
+                            </div>
+                        @endif
 						<div class="row">
 							<div class="col-md-2">
 								<input class="submit" type="submit" value="save">
@@ -62,28 +98,30 @@
 					</form>
 					<form method="post" action="{{ route('user.profile-edit') }}" class="password">
                         @csrf
-						<h4>02. Change password</h4>
+						<h4>03. Change password</h4>
 						<div class="row">
 						</div>
 						<div class="row">
 							<div class="col-md-6 form-it">
 								<label>New Password</label>
-								<input name="password" type="text" placeholder="***************">
+								<input name="password" type="password">
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6 form-it">
 								<label>Confirm New Password</label>
-								<input name="password_confirmation" type="text" placeholder="*************** ">
+								<input name="password_confirmation" type="password">
 							</div>
 						</div>
-                        <div class="row">
-                        @foreach($errors->profileErrors->all() as $error)
-                            <div class="col-md-6 alert alert-danger" role="alert">
-                                {{ $error }}
+                        @if(!$errors->passwordErrors->isEmpty())
+                            <div class="row">
+                            @foreach($errors->passwordErrors->all() as $error)
+                                <div class="col-md-6 alert alert-danger" role="alert">
+                                    {{ $error }}
+                                </div>
+                            @endforeach
                             </div>
-                        @endforeach
-                        </div>
+                        @endif
 						<div class="row">
 							<div class="col-md-2">
 								<input class="submit" type="submit" value="change">
