@@ -25,7 +25,7 @@
                 @foreach($gameUsers as $gameUser)
                 <div class="movie-item-style-2">
                     <div class="mv-item-infor">
-                        <h6><a href="">{{ $gameUser->user->name }} <span></span></a></h6>
+                        <h6><a href="{{ route('user.details',['id'=>$gameUser->user->id]) }}">{{ $gameUser->user->name }} <span></span></a></h6>
                         <p class="rate"><i class="ion-android-star"></i><span>{{ $gameUser->rating }}</span> /10</p>
                         <p class="describe">{{ $gameUser->review }}</p>
                     </div>

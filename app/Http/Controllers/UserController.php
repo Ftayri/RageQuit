@@ -57,12 +57,15 @@ class UserController extends Controller
         //stay on same page without reloading
         return redirect()->back();
     }
-    public function profileEdit(){
+    public function profileEdit(Request $request){
         if(auth()->check()){
             $user=auth()->user();
             $username=$user->name;
             $email=$user->email;
-
+            if($request->query('goto')){
+                $avatar=true;
+                return view('user.profile-edit',compact('username','email','avatar'));
+            }
             return view('user.profile-edit',compact('username','email'));
         }
         return redirect()->route('home');
@@ -107,6 +110,21 @@ class UserController extends Controller
             $user->email=$email;
             $user->save();
             return redirect()->back()->with('success','Email updated successfully');
+        }
+        else if ($request->file('avatar')){
+            $validator=Validator::make($request->all(), [
+                'avatar' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            ]);
+            if($validator->fails()){
+                return redirect()->route('user.profile-edit')->withErrors($validator,'avatarErrors');
+            }
+            $user=User::where('email',auth()->user()->email)->first();
+            $avatar=$request->file('avatar');
+            $avatarName=$user->id.'_avatar'.time().'.'.$avatar->extension();
+            $avatar->move(public_path('images/avatars'),$avatarName);
+            $user->avatar=$avatarName;
+            $user->save();
+            return redirect()->route('user.profile-edit')->with('success','Avatar updated successfully');
         }
         else{
             return redirect()->back();

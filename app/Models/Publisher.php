@@ -10,13 +10,16 @@ use Illuminate\Database\Eloquent\Model;
  * @property GamePublisher[] $gamePublishers
  * @property string $photo
  * @property string $description
+ * @property string $twitter_link
+ * @property string $website_link
  */
 class Publisher extends Model
 {
+    public $timestamps = false;
     /**
      * @var array
      */
-    protected $fillable = ['publisher_name', 'photo', 'description'];
+    protected $fillable = ['publisher_name', 'photo', 'description', 'twitter_link', 'website_link'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

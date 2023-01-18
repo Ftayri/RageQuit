@@ -26,10 +26,10 @@
 					<h1 class="bd-hd">{{ $publisher->publisher_name }}</h1>
 					<div class="social-btn">
 						@if($publisher->website_link)
-							<a href="{{ $publisher->twitter_link }}" class="parent-btn"><i class="ion-social-twitter"></i> Twitter</a>
+							<a href="{{ $publisher->twitter_link }}" class="parent-btn" target="_blank"><i class="ion-social-twitter"></i> Twitter</a>
 						@endif
 						@if($publisher->website_link)
-							<a href="{{ $publisher->website_link }}" class="parent-btn"><i class="ion-android-globe"></i> Website</a>
+							<a href="{{ $publisher->website_link }}" class="parent-btn" target="_blank"><i class="ion-android-globe"></i> Website</a>
 						@endif
 						<div class="hover-bnt">
 							<a href="#" class="parent-btn"><i class="ion-android-share-alt"></i>Share</a>
@@ -41,35 +41,15 @@
 							</div>
 						</div>
 					</div>
-					<div class="movie-rate">
-						<div class="rate">
-							<i class="ion-android-star"></i>
-							<p><span>8.1</span> /10<br>
-								<span class="rv">56 Reviews</span>
-							</p>
-						</div>
-						<div class="rate-star">
-							<p>Rate This Movie:  </p>
-							<i class="ion-ios-star"></i>
-							<i class="ion-ios-star"></i>
-							<i class="ion-ios-star"></i>
-							<i class="ion-ios-star"></i>
-							<i class="ion-ios-star"></i>
-							<i class="ion-ios-star"></i>
-							<i class="ion-ios-star"></i>
-							<i class="ion-ios-star"></i>
-							<i class="ion-ios-star-outline"></i>
-						</div>
-					</div>
 					<div class="movie-tabs">
 						<div class="tabs">
 							<ul class="tab-links tabs-mv">
 								@if($page>1)
 									<li><a href="#overview">Overview</a></li>
-									<li class="active"><a href="#moviesrelated"> Related Games</a></li>
+									<li class="active"><a href="#moviesrelated"> Published Games</a></li>
 								@else
 									<li class="active"><a href="#overview">Overview</a></li>
-									<li ><a href="#moviesrelated"> Related Games</a></li> 
+									<li ><a href="#moviesrelated"> Published Games</a></li> 
 								@endif              
 							</ul>
 						    <div class="tab-content">
@@ -86,13 +66,16 @@
 						            		<div class="sb-it">
 						            			<h6>Platforms: </h6>
                                                 <p>
-                                                    @foreach($platformNames as $platformName)
+                                                    @forelse($platformNames as $platformName)
                                                     <a href="#">{{ $platformName }} </a>,
-                                                    @endforeach
+													@empty
+													<p>No platforms found</p>
+													@endforelse
                                                 </p>
 						            		</div>
-						            		<div class="sb-it">
-						            		</div>
+											<div class="sb-it">
+												<p><a href="{{ route('publisher.edit',['id'=>$publisher->id]) }}">Edit Publisher</a></p>
+											</div>
 						            	</div>
 						            </div>
 						        </div>
@@ -104,31 +87,24 @@
 					       	 		<div class="row">
 					       	 			<h3>Games published by</h3>
 					       	 			<h2>{{ $publisher->publisher_name }}</h2>
-					       	 			<div class="topbar-filter">
-											<p>Found <span>{{ $totalGames }}</span> in total</p>
-											<label>Sort by:</label>
-											<select>
-												<option value="popularity">Popularity Descending</option>
-												<option value="popularity">Popularity Ascending</option>
-												<option value="rating">Rating Descending</option>
-												<option value="rating">Rating Ascending</option>
-												<option value="date">Release date Descending</option>
-												<option value="date">Release date Ascending</option>
-											</select>
-										</div>
-										@foreach($games as $game)
-											@include('partials.games_index')
-										@endforeach
-										<div class="topbar-filter">
-											<div class="pagination2">
-												<span>Page number {{ $page }}:</span>
-												@if($page>1)
-													<a href="{{ route('publisher.details',['id'=>$publisher->id, 'page' => $page-1]) }}"><i class="ion-arrow-left-b" style="padding-right:14px;"></i></a>
-												@endif
-												<a class="active" href="#">{{ $page }}</a>
-												<a href="{{ route('publisher.details',['id'=>$publisher->id, 'page' => $page+1]) }}"><i class="ion-arrow-right-b"></i></a>
+											<div class="topbar-filter">
+												<p>Found <span>{{ $totalGames }}</span> in total</p>
 											</div>
-										</div>
+											@if($totalGames!=0)
+											@foreach($games as $game)
+												@include('partials.games_index')
+											@endforeach
+											<div class="topbar-filter">
+												<div class="pagination2">
+													<span>Page number {{ $page }}:</span>
+													@if($page>1)
+														<a href="{{ route('publisher.details',['id'=>$publisher->id, 'page' => $page-1]) }}"><i class="ion-arrow-left-b" style="padding-right:14px;"></i></a>
+													@endif
+													<a class="active" href="#">{{ $page }}</a>
+													<a href="{{ route('publisher.details',['id'=>$publisher->id, 'page' => $page+1]) }}"><i class="ion-arrow-right-b"></i></a>
+												</div>
+											</div>
+										@endif
 					       	 		</div>
 					       	 	</div>
 						    </div>

@@ -21,14 +21,13 @@
 			<div class="col-md-3 col-sm-12 col-xs-12">
 				<div class="user-information">
 					<div class="user-img">
-						<a href="#"><img src="images/uploads/user-img.png" alt=""><br></a>
-						<a href="#" class="redbtn">Change avatar</a>
+						<a href="#"><img src="{{ asset('images/avatars/'.Auth::user()->avatar) }}" alt=""><br></a>
 					</div>
 					<div class="user-fav">
 						<p>Account Details</p>
 						<ul>
-							<li  class="active"><a href="{{ route('user.profile-edit') }}">Profile</a></li>
-							<li><a href="{{ route('user.profile') }}">Favorite movies</a></li>
+							<li  class="active"><a href="{{ route('user.profile-edit') }}">Edit Profile</a></li>
+							<li><a href="{{ route('user.profile') }}">Favorite games</a></li>
 						</ul>
 					</div>
 					<div class="user-fav">
@@ -40,13 +39,13 @@
 				</div>
 			</div>
 			<div class="col-md-9 col-sm-12 col-xs-12">
+				@if(session()->has('success'))
                 <div class="row">
-                    @if(session()->has('success'))
                     <div class="alert alert-success">
                         {{ session()->get('success') }}
                     </div>
-                    @endif
                 </div>
+				@endif
 				<div class="form-style-1 user-pro" action="#">
 					<form method="post" action="{{ route('user.profile-edit') }}" class="user">
                         @csrf
@@ -96,9 +95,33 @@
 							</div>
 						</div>	
 					</form>
+					<form id="avatar-form" method="post" action="{{ route('user.profile-edit') }}" class="user" enctype="multipart/form-data">
+                        @csrf
+						<h4>03. Change Avatar</h4>
+						<div class="row">
+							<div class="col-md-6 form-it">
+								<label>Upload avatar</label>
+								<input style="height:20%" name="avatar" type="file" required>
+							</div>
+						</div>
+                        @if(!$errors->avatarErrors->isEmpty())
+                            <div class="row">
+                            @foreach($errors->avatarErrors->all() as $error)
+                                <div class="col-md-6 alert alert-danger" role="alert">
+                                    {{ $error }}
+                                </div>
+                            @endforeach
+                            </div>
+                        @endif
+						<div class="row">
+							<div class="col-md-2">
+								<input class="submit" type="submit" value="save">
+							</div>
+						</div>	
+					</form>
 					<form method="post" action="{{ route('user.profile-edit') }}" class="password">
                         @csrf
-						<h4>03. Change password</h4>
+						<h4>04. Change password</h4>
 						<div class="row">
 						</div>
 						<div class="row">
@@ -133,4 +156,19 @@
 		</div>
 	</div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+@isset($avatar)
+<script>
+
+setTimeout(function(){
+	const element = document.getElementById('avatar-form');
+	const position = element.getBoundingClientRect();
+	console.log(position);
+	window.scrollTo({
+	top: position.top-100,
+	behavior: 'smooth',
+	});
+}, 1000);
+</script>
+@endisset
 @endsection

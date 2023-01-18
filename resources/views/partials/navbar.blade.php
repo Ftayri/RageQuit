@@ -25,10 +25,15 @@
                         Home <i aria-hidden="true"></i>
                         </a>
                     </li>
-                    <li>
-                        <a href="{{ route('game.index',['page' => 1]) }}" class="btn btn-default">
-                        Games <i aria-hidden="true"></i>
+                    <li class="dropdown first">
+                        <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown">
+                        Games <i class="fa fa-angle-down" aria-hidden="true"></i>
                         </a>
+                        <ul class="dropdown-menu level1">
+                            <li><a href="{{ route('game.index',['page' => 1]) }}">Discover</a></li>
+                            <li><a href="homev2.html">Add Game</a></li>
+                            <li><a href="{{ route('publisher.create') }}">Add Publisher</a></li>
+                        </ul>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav flex-child-menu menu-right">
@@ -61,7 +66,7 @@
             $('#signup').click();
         }, 3000);
         </script>
-    @else
+    @elseif($errors->has('username') || $errors->has('password'))
         <script type="text/javascript">
         //wait a 3 seconds then click on loginLink
         setTimeout(function(){

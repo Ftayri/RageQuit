@@ -156,7 +156,7 @@
 											<!-- movie user review -->
 											@if($firstReview)
 											<div class="mv-user-review-item">
-												<h3> Review by <a href="#" style="color:#4280bf">{{ $firstReview->user->name}}</a></h3>
+												<h3> Review by <a href="{{ route('user.details',['id'=>$firstReview->user->id]) }}" style="color:#4280bf">{{ $firstReview->user->name}}</a></h3>
 												<div class="no-star">
 													@for($i=0;$i<$firstReview->rating;$i++)
 														<i class="ion-android-star"></i>

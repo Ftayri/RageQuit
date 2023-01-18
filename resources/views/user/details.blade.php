@@ -5,7 +5,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="hero-ct">
-					<h1 style="margin-left:-350px;">{{ Auth::user()->name }}’s profile</h1>
+					<h1 style="margin-left:-350px;">{{ $user->name }}’s profile</h1>
 					<ul class="breadcumb">
 						<li class="active"><a href="{{ route('home') }}">Home</a></li>
 						<li> <span class="ion-ios-arrow-right"></span>Favorite Games</li>
@@ -21,20 +21,12 @@
 			<div class="col-md-3 col-sm-12 col-xs-12">
 				<div class="user-information">
 					<div class="user-img">
-						<a href="#"><img src="{{ asset('images/avatars/'.Auth::user()->avatar) }}" alt=""><br></a>
-						<a href="{{ route('user.profile-edit',['goto'=>'avatar']) }}" class="redbtn">Change avatar</a>
+						<a href="#"><img src="{{ asset('images/avatars/'.$user->avatar) }}" alt=""><br></a>
 					</div>
 					<div class="user-fav">
 						<p>Account Details</p>
 						<ul>
 							<li class="active"><a href="{{ route('user.profile') }}">Favorite games</a></li>
-							<li><a href="{{ route('user.profile-edit') }}">Edit profile</a></li>
-						</ul>
-					</div>
-					<div class="user-fav">
-						<p>Others</p>
-						<ul>
-							<li><a href="{{ route('user.logout') }}">Log out</a></li>
 						</ul>
 					</div>
 				</div>

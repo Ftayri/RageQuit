@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\GameUser;
 use App\Models\Game;
+use App\Models\User;
 
 class GameUserController extends Controller
 {
@@ -74,5 +75,12 @@ class GameUserController extends Controller
             return response()->json(['error'=>'Game not found']);
         }
         return response()->json(['error'=>'User not logged in']);
+    }
+    public function details(Request $request, $id){
+        $page=$request->query('page',1);
+        $user=User::where('id',$id)->first();
+        $totalGames=GameUser::where('user_id',$id)->count();
+        $userGames=GameUser::where('user_id',$id)->paginate(20,['*'],'page',$page);
+        return view('user.details',compact('user','userGames','page','totalGames'));
     }
 }
