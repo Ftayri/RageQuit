@@ -21,6 +21,8 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/',[HomeController::class,'index'])->name('home');
+Route::get('/games/create',[GameController::class,'create'])->name('game.create');
+Route::post('/game/create',[GameController::class,'store'])->name('game.store');
 Route::get('/games/{id}',[GameController::class,'details'])->name('game.details');
 Route::get('/games',[GameController::class,'index'])->name('game.index');
 Route::get('/publisher/create',[PublisherController::class,'create'])->name('publisher.create');

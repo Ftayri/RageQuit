@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Game;
+use App\Models\Publisher;
+use App\Models\Platform;
+use App\Models\Genre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -66,6 +69,12 @@ class GameController extends Controller
     {
         $items = $items instanceof Collection ? $items : Collection::make($items);
         return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+    }
+    public function create(){
+        $publishers=Publisher::all();
+        $platforms=Platform::all();
+        $genres=Genre::all();
+        return view('game.create',compact('publishers','platforms','genres'));
     }
 
 }

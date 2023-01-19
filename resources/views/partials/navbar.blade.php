@@ -31,14 +31,14 @@
                         </a>
                         <ul class="dropdown-menu level1">
                             <li><a href="{{ route('game.index',['page' => 1]) }}">Discover</a></li>
-                            <li><a href="homev2.html">Add Game</a></li>
+                            <li><a href="{{ route('game.create') }}">Add Game</a></li>
                             <li><a href="{{ route('publisher.create') }}">Add Publisher</a></li>
                         </ul>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav flex-child-menu menu-right">
                     @if(Auth::check())
-                        <li><a href="{{ route('user.profile',['page'=>1]) }}">{{ Auth::user()->name }}</a></li>
+                        <li><a href="{{ route('user.profile') }}">{{ Auth::user()->name }}</a></li>
                         <li class="btn btn-default"><a href="{{ route('user.logout') }}">Sign out</a></li>
                     @else
                         <li class="loginLink"><a href="#">Sign in</a></li>

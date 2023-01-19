@@ -35,7 +35,7 @@
                                 </div>
                             </div>
                         @endif
-                        <h4 class="sb-title">Search for movie</h4>
+                        <h4 class="sb-title">Add a Publisher</h4>
                         <form method="post" class="form-style-1" action="{{ route('publisher.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
@@ -52,7 +52,7 @@
                                     <input name="website_link" type="text" placeholder="Enter official website link">
                                 </div>
                                 <div class="col-md-6 form-it">
-                                    <label>Official twitter</label>
+                                    <label>Official Twitter</label>
                                     <input name="twitter_link" type="text" placeholder="Enter official twitter link">
                                 </div>
                                 <div class="col-md-12 form-it">

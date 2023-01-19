@@ -34,7 +34,9 @@
 <!--preloading-->
 <!--end of preloading-->
 <!--end of signup form popup-->
-@include('partials.loginsignupform')
+@if(!Auth::check())
+	@include('partials.loginsignupform')
+@endif
 @include('partials.navbar')
 @yield('content')
 @include('partials.footer')
