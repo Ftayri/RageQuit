@@ -19,10 +19,10 @@
                     Password:
                     <input type="password" name="password" id="password" placeholder="******" required="required" />
                 </label>
-                @error('password')
+                @error('password','loginErrors')
                     <div class="alert alert-danger">{{$message}}</div>
                 @enderror
-                @error('error')
+                @error('invalid','loginErrors')
                     <div class="alert alert-danger">{{$message}}</div>
                  @enderror
             </div>
@@ -54,9 +54,9 @@
             <div class="row">
                  <label for="username-2">
                     Username:
-                    <input type="text" name="username_signup" id="username-2" placeholder="" required/>
+                    <input type="text" name="username" id="username-2" placeholder="" required/>
                 </label>
-                @error('username_signup')
+                @error('username','signupErrors')
                     <div class="alert alert-danger">{{$message}}</div>
                 @enderror
             </div>
@@ -66,24 +66,24 @@
                     Your email:
                     <input type="email" name="email" id="email-2" placeholder="" required/>
                 </label>
-                @error('email')
+                @error('email','signupErrors')
                     <div class="alert alert-danger">{{$message}}</div>
                 @enderror
             </div>
              <div class="row">
                 <label for="password-2">
                     Password:
-                    <input type="password" name="password_signup" id="password-2" placeholder="" required/>
+                    <input type="password" name="password" id="password-2" placeholder="" required/>
                 </label>
             </div>
              <div class="row">
                 <label for="repassword-2">
                     Confirm Password:
-                    <input type="password" name="password_signup_confirmation" id="repassword-2" placeholder="" required/>
+                    <input type="password" name="password_confirmation" id="repassword-2" placeholder="" required/>
                 </label>
             </div>
-            @error('password_signup')
-                    <div class="alert alert-danger">{{str_replace('signup','',$message)}}</div>
+            @error('password','signupErrors')
+                    <div class="alert alert-danger">{{$message}}</div>
             @enderror
            <div class="row">
              <button type="submit">sign up</button>

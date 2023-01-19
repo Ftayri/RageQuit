@@ -56,15 +56,13 @@
 								<input name="name" type="text" value="{{ $username }}" required>
 							</div>
 						</div>
-                        @if(!$errors->profileErrors->isEmpty())
+						@error('name','profileErrors')
                             <div class="row">
-                            @foreach($errors->profileErrors->all() as $error)
                                 <div class="col-md-6 alert alert-danger" role="alert">
-                                    {{ $error }}
+                                    {{ $message }}
                                 </div>
-                            @endforeach
                             </div>
-                        @endif
+                        @enderror
 						<div class="row">
 							<div class="col-md-2">
 								<input class="submit" type="submit" value="save">
@@ -80,15 +78,13 @@
 								<input name="email" type="email" value="{{ $email }}" required>
 							</div>
 						</div>
-                        @if(!$errors->emailErrors->isEmpty())
+                        @error('email','emailErrors')
                             <div class="row">
-                            @foreach($errors->emailErrors->all() as $error)
                                 <div class="col-md-6 alert alert-danger" role="alert">
-                                    {{ $error }}
+                                    {{ $message }}
                                 </div>
-                            @endforeach
                             </div>
-                        @endif
+                        @enderror
 						<div class="row">
 							<div class="col-md-2">
 								<input class="submit" type="submit" value="save">
@@ -104,15 +100,13 @@
 								<input style="height:20%" name="avatar" type="file" required>
 							</div>
 						</div>
-                        @if(!$errors->avatarErrors->isEmpty())
+                        @error('avatar','avatarErrors')
                             <div class="row">
-                            @foreach($errors->avatarErrors->all() as $error)
                                 <div class="col-md-6 alert alert-danger" role="alert">
-                                    {{ $error }}
+                                    {{ $message }}
                                 </div>
-                            @endforeach
                             </div>
-                        @endif
+                        @enderror
 						<div class="row">
 							<div class="col-md-2">
 								<input class="submit" type="submit" value="save">
@@ -136,15 +130,13 @@
 								<input name="password_confirmation" type="password">
 							</div>
 						</div>
-                        @if(!$errors->passwordErrors->isEmpty())
-                            <div class="row">
-                            @foreach($errors->passwordErrors->all() as $error)
-                                <div class="col-md-6 alert alert-danger" role="alert">
-                                    {{ $error }}
-                                </div>
-                            @endforeach
-                            </div>
-                        @endif
+						@error('password','passwordErrors')
+						<div class="row">
+							<div class="col-md-6 alert alert-danger" role="alert">
+								{{ $message }}
+							</div>
+						</div>
+					@enderror
 						<div class="row">
 							<div class="col-md-2">
 								<input class="submit" type="submit" value="change">

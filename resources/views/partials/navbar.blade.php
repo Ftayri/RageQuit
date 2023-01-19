@@ -58,21 +58,17 @@
 	</div>
 </header>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-@if($errors->any())
-    @if($errors->has('username_signup') || $errors->has('email') || $errors->has('password_signup') || $errors->has('password_confirmation'))
-        <script type="text/javascript">
-        //wait a 3 seconds then click on signupLink
-        setTimeout(function(){
-            $('#signup').click();
-        }, 3000);
-        </script>
-    @elseif($errors->has('username') || $errors->has('password'))
-        <script type="text/javascript">
-        //wait a 3 seconds then click on loginLink
-        setTimeout(function(){
-            $('.loginLink').click();
-        }, 3000);
-        </script>
-    @endif
+ @if($errors->signupErrors->any())
+    <script type="text/javascript">
+    setTimeout(function(){
+        $('#signup').click();
+    }, 3000);
+    </script>
+@elseif($errors->loginErrors->any())
+    <script type="text/javascript">
+    setTimeout(function(){
+        $('.loginLink').click();
+    }, 3000);
+    </script>
 @endif
 <!-- END | Header -->

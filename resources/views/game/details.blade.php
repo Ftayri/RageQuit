@@ -129,7 +129,7 @@
 									<li><a href="#overview">Overview</a></li>
 									<li class="active"><a href="#moviesrelated"> Related Games</a></li>
 								@else
-								<li><a href="#overview">Overview</a></li>
+									<li class="active"><a href="#overview">Overview</a></li>
 									<li><a href="#moviesrelated"> Related Games</a></li>
 								@endif                        
 							</ul>

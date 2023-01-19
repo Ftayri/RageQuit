@@ -21,15 +21,16 @@ class UserController extends Controller
     {
         $valdiator=Validator::make($data->all(), [
             'username' => 'required|string',
-            'password' => 'required|min:8'
+            'password' => 'required|string'
         ]);
         if($valdiator->fails()){
-            return redirect()->back()->withErrors($valdiator);
+            return redirect()->back()->withErrors($valdiator,'loginErrors');
         }
         if (Auth::attempt(['name' => $data['username'], 'password' => $data['password']], $data['remember'])) {
             return redirect()->back();
         }
-        return redirect()->back()->withErrors(['error' => 'Invalid username or password']);
+        $error['invalid'] = 'Invalid username or password';
+        return redirect()->back()->withErrors($error,'loginErrors');
     }
 
     /**
@@ -41,17 +42,17 @@ class UserController extends Controller
     protected function register(Request $data)
     {
         $validator=Validator::make($data->all(), [
-            'username_signup' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password_signup' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
         if($validator->fails()){
-            return redirect()->back()->withErrors($validator);
+            return redirect()->back()->withErrors($validator,'signupErrors');
         }
             $user=User::create([
-            'name' => $data['username_signup'],
+            'name' => $data['username'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password_signup']),
+            'password' => Hash::make($data['password']),
         ]);
         Auth::login($user, $data['remember']);
         //stay on same page without reloading
@@ -87,7 +88,7 @@ class UserController extends Controller
         }
         else if ($request->input('name')){
             $validator=Validator::make($request->all(), [
-                'name' => ['required', 'string', 'max:255'],
+                'name' => ['required', 'string', 'max:10'],
             ]);
             $user=User::where('email',auth()->user()->email)->first();
             if($validator->fails()){
