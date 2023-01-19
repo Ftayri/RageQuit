@@ -60,6 +60,10 @@
                                     <input name="steam_link" type="text" placeholder="Enter steam link">
                                 </div>
                                 <div class="col-md-6 form-it">
+                                    <label>Trailer link</label>
+                                    <input name="trailer_link" type="text" placeholder="Enter steam link">
+                                </div>
+                                <div class="col-md-6 form-it">
                                     <label>Genre</label>
                                     <select name="genre_id">
                                         <option>Select genre</option>
@@ -92,7 +96,7 @@
                                 </div>
                                 <div class="col-md-3 form-it">
                                     <label>Release Year</label>
-                                    <input name="releas_year[]" type="number" placeholder="Enter release year"required>
+                                    <input name="release_year[]" type="text" placeholder="Enter release year"required>
                                 </div>
                                 <div class="col-md-2 form-it">
                                     <label>Add</label>

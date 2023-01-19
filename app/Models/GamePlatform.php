@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class GamePlatform extends Model
 {
+    public $timestamps = false;
     /**
      * @var array
      */

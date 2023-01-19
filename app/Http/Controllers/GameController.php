@@ -6,6 +6,8 @@ use App\Models\Game;
 use App\Models\Publisher;
 use App\Models\Platform;
 use App\Models\Genre;
+use App\Models\GamePublisher;
+use App\Models\GamePlatform;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -75,6 +77,61 @@ class GameController extends Controller
         $platforms=Platform::all();
         $genres=Genre::all();
         return view('game.create',compact('publishers','platforms','genres'));
+    }
+    public function store(Request $request){
+        $game=new Game();
+        $request->validate([
+            'game_name'=>['required','string','max:255','unique:games'],
+            'photo'=>['nullable','image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'background_image'=>['nullable','image', 'mimes:jpeg,png,jpg,gif,svg', 'max:4096'],
+            'description'=>['nullable','string'],
+            'website_link'=>['nullable','url'],
+            'steam_link'=>['nullable','url'],
+            'trailer_link'=>['nullable','url'],
+            'genre_id'=>['required'],
+            'platform_id'=>['required','array','min:1'],
+            'platform_id.*'=>['required','integer','exists:platforms,id'],
+            'publisher_id'=>['required','array','min:1'],
+            'publisher_id.*'=>['required','integer','exists:publishers,id'],
+            'release_year'=>['required','array','min:1'],
+            'release_year.*'=>['required','integer','min:1900','max:'.date('Y')],
+        ]);
+        $game->game_name=$request->input('game_name');
+        $game->description=$request->input('description');
+        $game->website_link=$request->input('website_link');
+        $game->steam_link=$request->input('steam_link');
+        $game->trailer_link=$request->input('trailer_link');
+        $game->genre_id=$request->input('genre_id');
+        if($request->hasFile('photo')){
+            $photo=$request->file('photo');
+            $photoName=time().'.'.$photo->getClientOriginalExtension();
+            $photo->move(public_path('images/games'),$photoName);
+            $game->photo=$photoName;
+        }
+        if($request->hasFile('background_image')){
+            $backgroundImage=$request->file('background_image');
+            $backgroundImageName=time().'.'.$backgroundImage->getClientOriginalExtension();
+            $backgroundImage->move(public_path('images/backgrounds'),$backgroundImageName);
+            $game->background_image=$backgroundImageName;
+        }
+        $game->average_rating=0;
+        $game->save();
+        $publishers=$request->input('publisher_id');
+        $platforms=$request->input('platform_id');
+        $releaseYears=$request->input('release_year');
+        for($i=0;$i<count($publishers);$i++){
+            $gamePublisher=new GamePublisher();
+            $gamePublisher->game_id=$game->id;
+            $gamePublisher->publisher_id=$publishers[$i];
+            $gamePublisher->save();
+            $gamePlatform=new GamePlatform();
+            $gamePlatform->game_publisher_id=$gamePublisher->id;
+            $gamePlatform->platform_id=$platforms[$i];
+            $gamePlatform->release_year=$releaseYears[$i];
+            $gamePlatform->save();
+        }
+        
+        return redirect()->route('game.details',['id'=>$game->id]);
     }
 
 }
