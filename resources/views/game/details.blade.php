@@ -189,6 +189,10 @@
 						            			<h6>Release Date:</h6>
 						            			<p>{{ $releaseYear }}</p>
 						            		</div>
+											<div class="sb-it">
+						            			<h6>Release Date:</h6>
+						            			<p><a href="{{ route('game.edit',['id'=>$game->id]) }}">Edit this game</a></p>
+						            		</div>
 						            	</div>
 						            </div>
 						        </div>

@@ -24,6 +24,8 @@ Route::get('/',[HomeController::class,'index'])->name('home');
 Route::get('/games/create',[GameController::class,'create'])->name('game.create');
 Route::post('/game/create',[GameController::class,'store'])->name('game.store');
 Route::get('/games/{id}',[GameController::class,'details'])->name('game.details');
+Route::get('/games/edit/{id}',[GameController::class,'edit'])->name('game.edit');
+Route::post('/games/edit/{id}',[GameController::class,'update'])->name('game.update');
 Route::get('/games',[GameController::class,'index'])->name('game.index');
 Route::get('/publisher/create',[PublisherController::class,'create'])->name('publisher.create');
 Route::post('/publisher/create',[PublisherController::class,'store'])->name('publisher.store');
