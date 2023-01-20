@@ -173,13 +173,13 @@
 						            	<div class="col-md-4 col-xs-12 col-sm-12">
 						            		<div class="sb-it">
 						            			<h6>Platforms: </h6>
+												<p>
 												@foreach($gamePlatforms as $gamePlatform)
-													<p>
 														@foreach($gamePlatform as $gameplat)
 															<a href="{{ route('platform.games',['id'=>$gameplat->platform->id,'page'=>1]) }}">{{ $gameplat->platform->platform_name }}</a>,
 														@endforeach
-													</p>
 												@endforeach
+												</p>
 						            		</div>
 						            		<div class="sb-it">
 						            			<h6>Genre:</h6>

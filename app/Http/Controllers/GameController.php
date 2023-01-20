@@ -73,9 +73,9 @@ class GameController extends Controller
         return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
     public function create(){
-        $publishers=Publisher::all();
-        $platforms=Platform::all();
-        $genres=Genre::all();
+        $publishers=Publisher::orderBy('publisher_name')->get();
+        $platforms=Platform::orderBy('platform_name')->get();
+        $genres=Genre::orderBy('genre_name')->get();
         return view('game.create',compact('publishers','platforms','genres'));
     }
     public function store(Request $request){
@@ -120,31 +120,38 @@ class GameController extends Controller
         $platforms=$request->input('platform_id');
         $releaseYears=$request->input('release_year');
         for($i=0;$i<count($publishers);$i++){
-            $gamePublisher=new GamePublisher();
-            $gamePublisher->game_id=$game->id;
-            $gamePublisher->publisher_id=$publishers[$i];
-            $gamePublisher->save();
-            $gamePlatform=new GamePlatform();
-            $gamePlatform->game_publisher_id=$gamePublisher->id;
-            $gamePlatform->platform_id=$platforms[$i];
-            $gamePlatform->release_year=$releaseYears[$i];
-            $gamePlatform->save();
+            $gamePublisher=GamePublisher::where('publisher_id',$publishers[$i])->where('game_id',$game->id)->first();
+            if($gamePublisher==null){
+                $gamePublisher=new GamePublisher();
+                $gamePublisher->game_id=$game->id;
+                $gamePublisher->publisher_id=$publishers[$i];
+                $gamePublisher->save();
+            }
+            $gamePlatform=GamePlatform::where('game_publisher_id',$gamePublisher->id)->where('platform_id',$platforms[$i])->first();
+            if($gamePlatform==null){
+                $gamePlatform=new GamePlatform();
+                $gamePlatform->game_publisher_id=$gamePublisher->id;
+                $gamePlatform->platform_id=$platforms[$i];
+                $gamePlatform->release_year=$releaseYears[$i];
+                $gamePlatform->save();
+            }
         }
         
         return redirect()->route('game.details',['id'=>$game->id]);
     }
     public function edit($id){
         $game=Game::where('id',$id)->first();
-        $currentPublishers=$game->gamePublishers;
-        foreach($currentPublishers as $gamePublisher){
-            $currentPlatforms[]=$gamePublisher->gamePlatforms->pluck('platform_id')->toArray();
+        $publishers=$game->gamePublishers;
+        foreach($publishers as $gamePublisher){
+            //get all gamePlatforms of this publisher with eloquent
+            $currentGamePlatforms[]=$gamePublisher->gamePlatforms;
+            
             $releaseYears[]=$gamePublisher->gamePlatforms->pluck('release_year')->toArray();
         }
-        $currentPublishers=$currentPublishers->pluck('publisher_id')->toArray();
-        $publishers=Publisher::all();
-        $platforms=Platform::all();
+        $publishers=Publisher::orderBy('publisher_name')->get();
+        $platforms=Platform::orderBy('platform_name')->get();
         $genres=Genre::all();
-        return view('game.edit',compact('game','publishers','platforms','genres','currentPublishers','currentPlatforms','releaseYears'));
+        return view('game.edit',compact('game','publishers','platforms','genres','currentGamePlatforms','releaseYears'));
     }
     public function update(Request $request, $id ){
         $game=Game::where('id',$id)->first();
@@ -186,21 +193,26 @@ class GameController extends Controller
         $publishers=$request->input('publisher_id');
         $platforms=$request->input('platform_id');
         $releaseYears=$request->input('release_year');
-        //drop all gamePublishers where game_id=$game->id
         $gamePublishers=GamePublisher::where('game_id',$game->id)->get();
         foreach($gamePublishers as $gamePublisher){
             $gamePublisher->delete();
         }
         for($i=0;$i<count($publishers);$i++){
-            $gamePublisher=new GamePublisher();
-            $gamePublisher->game_id=$game->id;
-            $gamePublisher->publisher_id=$publishers[$i];
-            $gamePublisher->save();
-            $gamePlatform=new GamePlatform();
-            $gamePlatform->game_publisher_id=$gamePublisher->id;
-            $gamePlatform->platform_id=$platforms[$i];
-            $gamePlatform->release_year=$releaseYears[$i];
-            $gamePlatform->save();
+            $gamePublisher=GamePublisher::where('publisher_id',$publishers[$i])->where('game_id',$game->id)->first();
+            if($gamePublisher==null){
+                $gamePublisher=new GamePublisher();
+                $gamePublisher->game_id=$game->id;
+                $gamePublisher->publisher_id=$publishers[$i];
+                $gamePublisher->save();
+            }
+            $gamePlatform=GamePlatform::where('game_publisher_id',$gamePublisher->id)->where('platform_id',$platforms[$i])->first();
+            if($gamePlatform==null){
+                $gamePlatform=new GamePlatform();
+                $gamePlatform->game_publisher_id=$gamePublisher->id;
+                $gamePlatform->platform_id=$platforms[$i];
+                $gamePlatform->release_year=$releaseYears[$i];
+                $gamePlatform->save();
+            }
         }
         return redirect()->route('game.details',['id'=>$game->id]);        
     }

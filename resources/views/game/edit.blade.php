@@ -78,47 +78,57 @@
                                 <div class="col-md-12 form-it">
                                     <label>Description</label>
                                     <textarea name="description">{{ $game->description }}</textarea>
-                                </div>
-                                @for($i=0;$i<count($currentPublishers);$i++)
-                                <div class="col-md-3 form-it">
-                                    <label>Publisher</label>
-                                    <select name="publisher_id[]">
-                                        <option>Select publisher</option>
-                                        @foreach($publishers as $publisher)
-                                            @if($publisher->id == $currentPublishers[$i])
-                                                <option value="{{ $publisher->id }}" selected>{{ $publisher->publisher_name }}</option>
-                                            @else
-                                                <option value="{{ $publisher->id }}">{{ $publisher->publisher_name }}</option>
+                                </div> 
+                                @php $i=0; @endphp
+                                @foreach($currentGamePlatforms as $currentGamePlatform)
+                                    @foreach ($currentGamePlatform as $gamePlatform)
+                                        <div id="entry {{ $i }}" class="col-md-12">
+                                            <div class="col-md-3 form-it">
+                                                <label>Publisher</label>
+                                                <select name="publisher_id[]">
+                                                    <option>Select publisher</option>
+                                                    @foreach($publishers as $publisher)
+                                                        @if($publisher->id == $gamePlatform->gamePublisher->publisher_id)
+                                                            <option value="{{ $publisher->id }}" selected>{{ $publisher->publisher_name }}</option>
+                                                        @else
+                                                            <option value="{{ $publisher->id }}">{{ $publisher->publisher_name }}</option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3 form-it">
+                                                <label>Platform</label>
+                                                <select name="platform_id[]">
+                                                    <option>Select platform</option>
+                                                    @foreach($platforms as $platform)
+                                                        @if($platform->id == $gamePlatform->platform_id)
+                                                            <option value="{{ $platform->id }}" selected>{{ $platform->platform_name }}</option>
+                                                        @else
+                                                            <option value="{{ $platform->id }}">{{ $platform->platform_name }}</option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3 form-it">
+                                                <label>Release Year</label>
+                                                <input name="release_year[]" type="text" value="{{ $gamePlatform->release_year}}" required>
+                                            </div>
+                                            @if($i==0)
+                                                <div class="entry-buttons">
+                                                    <div id="add-div" class="col-md-2 form-it">
+                                                        <label>Add</label>
+                                                        <button type="button" id="new-entry">+</button>
+                                                    </div>
+                                                    <div id="remove-div" class="col-md-1 form-it">
+                                                        <label>Remove</label>
+                                                        <button type="button" id="remove-entry">-</button>
+                                                    </div>
+                                                </div>
                                             @endif
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-3 form-it">
-                                    <label>Platform</label>
-                                    <select name="platform_id[]">
-                                        <option>Select platform</option>
-                                        @foreach($platforms as $platform)
-                                            @if($platform->id == $currentPlatforms[$i][0])
-                                                <option value="{{ $platform->id }}" selected>{{ $platform->platform_name }}</option>
-                                            @else
-                                                <option value="{{ $platform->id }}">{{ $platform->platform_name }}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-3 form-it">
-                                    <label>Release Year</label>
-                                    <input name="release_year[]" type="text" value="{{ $releaseYears[$i][0] }}" required>
-                                </div>
-                                <div class="col-md-2 form-it">
-                                    <label>Add</label>
-                                    <button>+</button>
-                                </div>
-                                <div class="col-md-1 form-it">
-                                    <label>Remove</label>
-                                    <button>-</button>
-                                </div>
-                                @endfor
+                                            @php $i++; @endphp
+                                        </div>
+                                    @endforeach
+                                @endforeach
                                 <div class="col-md-12 ">
                                     <input class="submit" type="submit" value="submit">
                                 </div>
@@ -129,4 +139,24 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    //get element by class
+    var i="<?php echo $i; ?>";
+    i--;
+    document.getElementById("new-entry").onclick = function() {
+        var container = document.getElementById("container");
+        var entry = document.getElementById("entry "+i);
+        var new_entry=container.insertBefore(entry.cloneNode(true), entry.nextSibling);
+        new_entry.id="entry "+(i+1);
+        i++;
+        var buttons = document.getElementsByClassName("entry-buttons")[i];
+        buttons.parentNode.removeChild(buttons);
+    }
+    document.getElementById("remove-entry").onclick = function() {
+    var container = document.getElementById("container");
+    var entry = document.getElementById("entry "+i);
+    container.removeChild(entry);
+    i--;
+}
+</script>
 @endsection
